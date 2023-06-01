@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>三碗清风</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="三碗清风" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/localshare/css/share.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">三碗清风</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我还在老地方等你，尽管你已走远</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+          <a class="main-nav-link" href="/about/"><i class="fa fa-user"></i> 关于</a>
+        
+          <a class="main-nav-link" href="/atom.xml"><i class="fa fa-rss"></i> 订阅</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  <article id="post-JVM/垃圾收集器与内存分配策略" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://img2.baidu.com/it/u=1734247813,400897296&fm=253&fmt=auto&app=138&f=PNG?w=1111&h=500" rel="gallery_clidd51ir0002fkvn2ayz02fz noopener">
+        <img src="https://img2.baidu.com/it/u=1734247813,400897296&fm=253&fmt=auto&app=138&f=PNG?w=1111&h=500" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/18/JVM/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/">垃圾收集器与内存分配策略</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-04-17T16:00:00.000Z" itemprop="datePublished">2023年04月18日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/JVM/">JVM</a>
+  </div>
+
+      
+      
+<a href="/2023/04/18/JVM/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>垃圾收集器在对堆进行回收前，需要先识别出垃圾</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jvm/" rel="tag">jvm</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2023/04/18/JVM/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+  <article id="post-JVM/Java内存区域与内存溢出异常" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://img2.baidu.com/it/u=1734247813,400897296&fm=253&fmt=auto&app=138&f=PNG?w=1111&h=500" rel="gallery_clidd51io0001fkvn1jhzfr23 noopener">
+        <img src="https://img2.baidu.com/it/u=1734247813,400897296&fm=253&fmt=auto&app=138&f=PNG?w=1111&h=500" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/17/JVM/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/">Java内存区域与内存溢出异常</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-04-16T16:00:00.000Z" itemprop="datePublished">2023年04月17日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/JVM/">JVM</a>
+  </div>
+
+      
+      
+<a href="/2023/04/17/JVM/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Java与C++之间有一堵由内存动态分配和垃圾收集技术所围成的“高墙”，墙外面的人想进去，墙里面的人却想出来。</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java-jvm/" rel="tag">java,jvm</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2023/04/17/JVM/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+  <article id="post-诗词/加班" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://p5.itc.cn/q_70/images03/20210326/22eeb62304b24a8f861ff8f572a3eab2.jpeg" rel="gallery_clidd51j4000cfkvnhzyf3dni noopener">
+        <img src="https://p5.itc.cn/q_70/images03/20210326/22eeb62304b24a8f861ff8f572a3eab2.jpeg" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E5%8A%A0%E7%8F%AD/">加班</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-04-12T16:00:00.000Z" itemprop="datePublished">2023年04月13日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a>
+  </div>
+
+      
+      
+<a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E5%8A%A0%E7%8F%AD/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>加班</p>
+<p>身体像被什么封印住了</p>
+<p>一张桌子、一台电脑、一具行尸走肉</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E5%8A%A0%E7%8F%AD/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+  <article id="post-诗词/你在" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://img.ihuashi.cn/data/upload/shop/editor/20161207180552_92410.png" rel="gallery_clidd51j6000gfkvnbet28rp4 noopener">
+        <img src="https://img.ihuashi.cn/data/upload/shop/editor/20161207180552_92410.png" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E4%BD%A0%E5%9C%A8/">你在</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-04-12T16:00:00.000Z" itemprop="datePublished">2023年04月13日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a>
+  </div>
+
+      
+      
+<a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E4%BD%A0%E5%9C%A8/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>你在</p>
+<p>这世界就谈不上好坏</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E4%BD%A0%E5%9C%A8/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+  <article id="post-诗词/把生活写成诗" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://img.zcool.cn/community/016ba660001e7c11013f79283662c7.jpg@2o.jpg" rel="gallery_clidd51jf0010fkvn2lzy0451 noopener">
+        <img src="https://img.zcool.cn/community/016ba660001e7c11013f79283662c7.jpg@2o.jpg" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E6%8A%8A%E7%94%9F%E6%B4%BB%E5%86%99%E6%88%90%E8%AF%97/">把生活写成诗</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2023-04-12T16:00:00.000Z" itemprop="datePublished">2023年04月13日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a>
+  </div>
+
+      
+      
+<a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E6%8A%8A%E7%94%9F%E6%B4%BB%E5%86%99%E6%88%90%E8%AF%97/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>保温杯<br>再滚烫的热情<br>也会有冷却的时候</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E6%8A%8A%E7%94%9F%E6%B4%BB%E5%86%99%E6%88%90%E8%AF%97/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+  <article id="post-语录/盘点爱情公寓经典语录" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190510%2F49aba6bb494d4d549dd3c5472d606b48.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667920656&t=b1b45ddab532f86f58cb86fb70eba67e" rel="gallery_clidd51ji0018fkvn52967g25 noopener">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190510%2F49aba6bb494d4d549dd3c5472d606b48.jpeg&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667920656&t=b1b45ddab532f86f58cb86fb70eba67e" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/10/09/%E8%AF%AD%E5%BD%95/%E7%9B%98%E7%82%B9%E7%88%B1%E6%83%85%E5%85%AC%E5%AF%93%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/">盘点爱情公寓经典语录</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-10-08T16:00:00.000Z" itemprop="datePublished">2022年10月09日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/">经典语录</a>
+  </div>
+
+      
+      
+<a href="/2022/10/09/%E8%AF%AD%E5%BD%95/%E7%9B%98%E7%82%B9%E7%88%B1%E6%83%85%E5%85%AC%E5%AF%93%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p><strong>如果你知道你的价值，你就前进实现你的价值。</strong></p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AF%AD%E5%BD%95/" rel="tag">语录</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2022/10/09/%E8%AF%AD%E5%BD%95/%E7%9B%98%E7%82%B9%E7%88%B1%E6%83%85%E5%85%AC%E5%AF%93%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+  <article id="post-诗词/孤独的吉他" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F1%2F549268501ab54.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667814603&t=1af098dfcaf6d9d549d675a9a2b219be" rel="gallery_clidd51jb000ofkvn63537o3k noopener">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F1%2F549268501ab54.jpg&refer=http%3A%2F%2Fpic1.win4000.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667814603&t=1af098dfcaf6d9d549d675a9a2b219be" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E5%AD%A4%E7%8B%AC%E7%9A%84%E5%90%89%E4%BB%96/">孤独的吉他</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-10-08T09:49:00.000Z" itemprop="datePublished">2022年10月08日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a>
+  </div>
+
+      
+      
+<a href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E5%AD%A4%E7%8B%AC%E7%9A%84%E5%90%89%E4%BB%96/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>我有一把吉他<br>孤独躺在我的衣柜中<br>有着淡淡的惆怅<br>仅凭着它身上的灰尘<br>辨别出它所留下岁月的痕迹</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E5%AD%A4%E7%8B%AC%E7%9A%84%E5%90%89%E4%BB%96/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+  <article id="post-诗词/知否" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn09%2F155%2Fw640h315%2F20180731%2F8f53-hhacrce0150339.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667814494&t=fed9431cd27138d0d88e0c5afddeb2c8" rel="gallery_clidd51je000xfkvn1bjh6nat noopener">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn09%2F155%2Fw640h315%2F20180731%2F8f53-hhacrce0150339.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667814494&t=fed9431cd27138d0d88e0c5afddeb2c8" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E7%9F%A5%E5%90%A6/">知否</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-10-08T09:48:00.000Z" itemprop="datePublished">2022年10月08日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a>
+  </div>
+
+      
+      
+<a href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E7%9F%A5%E5%90%A6/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>我将相思种成红豆<br>掬烂如泥的䁔意入喉<br>碗中倒映出的镜片满是回忆<br>相隔一方的故人知否</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E7%9F%A5%E5%90%A6/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+  <article id="post-诗词/老屋" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Ftxcdn-mpres.51vv.com%2Fv_block%2F65d026e9200e1c1d6b418c4cf71f0d74.jpg&refer=http%3A%2F%2Ftxcdn-mpres.51vv.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667813635&t=b40a6fde57f5be18c2c1a9dc26d1f5d4" rel="gallery_clidd51jg0013fkvncb7u5bp6 noopener">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Ftxcdn-mpres.51vv.com%2Fv_block%2F65d026e9200e1c1d6b418c4cf71f0d74.jpg&refer=http%3A%2F%2Ftxcdn-mpres.51vv.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667813635&t=b40a6fde57f5be18c2c1a9dc26d1f5d4" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E8%80%81%E5%B1%8B/">老屋</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-10-08T09:35:00.000Z" itemprop="datePublished">2022年10月08日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a>
+  </div>
+
+      
+      
+<a href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E8%80%81%E5%B1%8B/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>老屋</p>
+<p>由爹娘守候着</p>
+<p>和几只母鸡为伴</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E8%80%81%E5%B1%8B/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+  <article id="post-数据结构/数据结构与算法学习-稀疏数组与队列" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://picx.zhimg.com/v2-3b31919a130c9e1b7c98d74adb45de84_1440w.jpg?source=172ae18b" rel="gallery_clidd51j3000bfkvnhg4m52fy noopener">
+        <img src="https://picx.zhimg.com/v2-3b31919a130c9e1b7c98d74adb45de84_1440w.jpg?source=172ae18b" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2022/10/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E7%A8%80%E7%96%8F%E6%95%B0%E7%BB%84%E4%B8%8E%E9%98%9F%E5%88%97/">数据结构与算法学习-稀疏数组与队列</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-10-07T16:00:00.000Z" itemprop="datePublished">2022年10月08日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+  </div>
+
+      
+      
+<a href="/2022/10/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E7%A8%80%E7%96%8F%E6%95%B0%E7%BB%84%E4%B8%8E%E9%98%9F%E5%88%97/#comments" class="article-comment-link">
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h6 id="稀疏数组"><a href="#稀疏数组" class="headerlink" title="稀疏数组"></a>稀疏数组</h6><p><strong>基本介绍：</strong></p>
+<p>当一个数组中大部分为0，或者为同一个值的数组时，可以利用稀疏数组来保存该数组。</p>
+      
+    </div>
+    <footer class="article-footer">
+      
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+        <p class="article-more-link">
+          <a href="/2022/10/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E7%A8%80%E7%96%8F%E6%95%B0%E7%BB%84%E4%B8%8E%E9%98%9F%E5%88%97/#more">Read More</a>
+        </p>
+      
+      
+      
+    </footer>
+  </div>
+</article>
+
+
+
+    <nav id="page-nav">
+
+<span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+</nav>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/04/18/JVM/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/">垃圾收集器与内存分配策略</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/17/JVM/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/">Java内存区域与内存溢出异常</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E5%8A%A0%E7%8F%AD/">加班</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E4%BD%A0%E5%9C%A8/">你在</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E6%8A%8A%E7%94%9F%E6%B4%BB%E5%86%99%E6%88%90%E8%AF%97/">把生活写成诗</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/java-jvm/" style="font-size: 10px;">java,jvm</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/%E4%BA%94%E8%A8%80%E7%BB%9D%E5%8F%A5/" style="font-size: 10px;">五言绝句</a> <a href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%8D/" style="font-size: 15px;">现代词</a> <a href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" style="font-size: 20px;">现代诗</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AF%AD%E5%BD%95/" style="font-size: 10px;">语录</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mysql/">Mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/">经典语录</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a><span class="category-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023年</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">13</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-jvm/" rel="tag">java,jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/" rel="tag">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%94%E8%A8%80%E7%BB%9D%E5%8F%A5/" rel="tag">五言绝句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%8D/" rel="tag">现代词</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E5%BD%95/" rel="tag">语录</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> 友情链接</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="https://www.liangrenchi.top/">三碗清风知识体系</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2023 梁任炽.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+
+  
+
+
+
+</body>
+</html>

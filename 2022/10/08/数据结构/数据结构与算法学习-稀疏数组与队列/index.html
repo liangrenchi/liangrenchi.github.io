@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>数据结构与算法学习-稀疏数组与队列 | 三碗清风</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="三碗清风" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/localshare/css/share.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">三碗清风</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我还在老地方等你，尽管你已走远</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+          <a class="main-nav-link" href="/about/"><i class="fa fa-user"></i> 关于</a>
+        
+          <a class="main-nav-link" href="/atom.xml"><i class="fa fa-rss"></i> 订阅</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-数据结构/数据结构与算法学习-稀疏数组与队列" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://picx.zhimg.com/v2-3b31919a130c9e1b7c98d74adb45de84_1440w.jpg?source=172ae18b" rel="gallery_clidd51j3000bfkvnhg4m52fy noopener">
+        <img src="https://picx.zhimg.com/v2-3b31919a130c9e1b7c98d74adb45de84_1440w.jpg?source=172ae18b" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      数据结构与算法学习-稀疏数组与队列
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-10-07T16:00:00.000Z" itemprop="datePublished">2022年10月08日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2022/10/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E7%A8%80%E7%96%8F%E6%95%B0%E7%BB%84%E4%B8%8E%E9%98%9F%E5%88%97/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h6 id="稀疏数组"><a href="#稀疏数组" class="headerlink" title="稀疏数组"></a>稀疏数组</h6><p><strong>基本介绍：</strong></p>
+<p>当一个数组中大部分为0，或者为同一个值的数组时，可以利用稀疏数组来保存该数组。</p>
+<span id="more"></span>
+
+<p>稀疏数组的处理方法是：</p>
+<ol>
+<li>记录数组一共有几行几列，有多少个不同的值</li>
+<li>把具有不同值的元素的行列及值记录在一个小规模的数组中，从而缩小程序的规模</li>
+</ol>
+<p>先看一个实际的例子，在五子棋中有存盘退出和续上盘的功能。</p>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20221008161002065.png" alt="image-20221008161002065"></p>
+<p><strong>分析问题</strong>：由棋盘的布局可知，程序在实现棋子位置时是以一个多维数组存储中，未落子的地方标识为0，若此时存盘退出就有很多位置都是为0无意义的数据，这些数据也会占有一定的空间。此时可以利用稀疏数组存储有落子的位置，无落子的位置我们无需记录，这将大大节省程序的存储空间。</p>
+<p><strong>举例说明：</strong></p>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20221008162006937.png" alt="image-20221008162006937"></p>
+<p><strong>应用实例：</strong></p>
+<ol>
+<li>使用稀疏数组来保存类似前面的二维数组（棋盘、地图等）</li>
+<li>把稀疏数组存盘，并且可以从新恢复原来的二维数组</li>
+</ol>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20221008162318516.png" alt="image-20221008162318516"></p>
+<p><strong>代码实现：</strong></p>
+<p>二维数组转稀疏数组</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 二维数组转稀疏数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> chessArr</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[][] twoArrayToSparseArray(<span class="type">int</span>[][] chessArr)&#123;</span><br><span class="line">    <span class="comment">//1、遍历原来的二维数组，得到有效数据的个数sum</span></span><br><span class="line">    <span class="type">int</span> sum=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;chessArr.length;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j=<span class="number">0</span>;j&lt;chessArr[i].length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (chessArr[i][j] !=<span class="number">0</span>)&#123;</span><br><span class="line">                sum++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//2、根据sum就可以创建稀疏数组sparseArr int[sum+1][3]</span></span><br><span class="line">    <span class="type">int</span>[][] sparseArr = <span class="keyword">new</span> <span class="title class_">int</span>[sum+<span class="number">1</span>][<span class="number">3</span>];</span><br><span class="line">    sparseArr[<span class="number">0</span>][<span class="number">0</span>] = chessArr.length;</span><br><span class="line">    sparseArr[<span class="number">0</span>][<span class="number">1</span>] = chessArr[<span class="number">0</span>].length;</span><br><span class="line">    sparseArr[<span class="number">0</span>][<span class="number">2</span>] = sum;</span><br><span class="line">    <span class="comment">//3、将二维数组的有效数据存入到稀疏数组</span></span><br><span class="line">    <span class="type">int</span> index=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;chessArr.length;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j=<span class="number">0</span>;j&lt;chessArr[i].length;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span> (chessArr[i][j] !=<span class="number">0</span>)&#123;</span><br><span class="line">                sparseArr[index][<span class="number">0</span>]=i;</span><br><span class="line">                sparseArr[index][<span class="number">1</span>]=j;</span><br><span class="line">                sparseArr[index][<span class="number">2</span>]=chessArr[i][j];</span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sparseArr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>稀疏数组转二维数组</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 稀疏数组转二维数组</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> sparseArr</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span>[][] sparseArrayToToArray(<span class="type">int</span>[][] sparseArr)&#123;</span><br><span class="line">    <span class="comment">//1、先读取稀疏数组的第一行，根据第一行创建原始的二维数组</span></span><br><span class="line">    <span class="type">int</span>[][] twoArray = <span class="keyword">new</span> <span class="title class_">int</span>[sparseArr[<span class="number">0</span>][<span class="number">0</span>]][sparseArr[<span class="number">0</span>][<span class="number">1</span>]];</span><br><span class="line">    <span class="comment">//2、在读取疏稀数组后几行的数据并赋值给原始的二维数组即可</span></span><br><span class="line">    IntStream.range(<span class="number">1</span>, sparseArr.length)</span><br><span class="line">            .forEach(i -&gt; twoArray[sparseArr[i][<span class="number">0</span>]][sparseArr[i][<span class="number">1</span>]] = sparseArr[i][<span class="number">2</span>]);</span><br><span class="line">    <span class="keyword">return</span> twoArray;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h6><p><strong>队列介绍</strong></p>
+<p>队列是一个有序列表，可以用<strong>数组</strong>或<strong>链表</strong>来实现</p>
+<p>遵循<strong>先入先出</strong>的原则：即：先存入队列的数据，要先取出。后存入的要后取出。</p>
+<p>示意图：（使用数组模拟队列示意图）</p>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20221008163049283.png" alt="image-20221008163049283"></p>
+<p><strong>数组模拟队列</strong></p>
+<p>队列本身是有序列表，若使用数组的结构来存储队列的数据，则队列数组的声明如下图，其中<strong>maxSize</strong>是该队列的最大容量。</p>
+<p>因为队列的输出、输入是分别从前后端来处理，因此需要两个变量<strong>front</strong>及<strong>rear分别记录队列前后端的下标</strong>，<strong>front</strong>会随着数据输出而改变，而<strong>rear</strong>则是随着数据的输入而改变，如图所示。</p>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20221008164020987.png" alt="image-20221008164020987"></p>
+<p><strong>思路分析</strong>：</p>
+<p>当我们将数据存入队列时称为“addQueue”，addQueue的处理需要有两个步骤：</p>
+<ol>
+<li>将尾指针往后移：rear+1，当front&#x3D;&#x3D;rear【空】</li>
+<li>若尾指针rear小于队列的最大下标maxSize-1，则将数据存入rear所指的数组元素中，否则无法存入数据。rear&#x3D;&#x3D;maxSize-1【队列满】</li>
+</ol>
+<p><strong>代码实现</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ArrayQueue</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer front;</span><br><span class="line">    <span class="keyword">private</span> Integer rear;</span><br><span class="line">    <span class="keyword">private</span> Integer maxSize;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span>[] arr;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 初始化队列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> maxSize</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ArrayQueue</span><span class="params">(Integer maxSize)</span> &#123;</span><br><span class="line">        arr = <span class="keyword">new</span> <span class="title class_">int</span>[maxSize];</span><br><span class="line">        front = -<span class="number">1</span>;</span><br><span class="line">        rear = -<span class="number">1</span>;</span><br><span class="line">        <span class="built_in">this</span>.maxSize = maxSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 入队列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sum</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">popQueue</span><span class="params">(Integer sum)</span>&#123;</span><br><span class="line">        rear++;</span><br><span class="line">        <span class="keyword">if</span> (rear&gt;=maxSize)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;超出队列最大长度&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        arr[rear] = sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 出队列</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">pushQueue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (front&gt;=maxSize)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;超出队列最大长度&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        front++;</span><br><span class="line">        <span class="keyword">if</span> (Objects.equals(front,maxSize-<span class="number">1</span>))&#123;</span><br><span class="line">            front = -<span class="number">1</span>;</span><br><span class="line">            rear = -<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 显示队列的情况</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">showQueue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i=front+<span class="number">1</span>;i&lt;=rear;i++)&#123;</span><br><span class="line">            System.out.print(arr[i]+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getFront</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> front;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ArrayQueue <span class="title function_">setFront</span><span class="params">(Integer front)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.front = front;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getRear</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> rear;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ArrayQueue <span class="title function_">setRear</span><span class="params">(Integer rear)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.rear = rear;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getMaxSize</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> maxSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ArrayQueue <span class="title function_">setMaxSize</span><span class="params">(Integer maxSize)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.maxSize = maxSize;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E7%A8%80%E7%96%8F%E6%95%B0%E7%BB%84"><span class="toc-text">稀疏数组</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%98%9F%E5%88%97"><span class="toc-text">队列</span></a></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="http://example.com/2022/10/08/数据结构/数据结构与算法学习-稀疏数组与队列/">http://example.com/2022/10/08/数据结构/数据结构与算法学习-稀疏数组与队列/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2022/10/03/Mysql/%E4%B8%80%E3%80%81%E7%B4%A2%E5%BC%95%E7%9A%84%E6%A6%82%E8%BF%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          索引的概述
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/10/08/%E8%AF%97%E8%AF%8D/%E8%80%81%E5%B1%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          老屋
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/04/18/JVM/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/">垃圾收集器与内存分配策略</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/17/JVM/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/">Java内存区域与内存溢出异常</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E5%8A%A0%E7%8F%AD/">加班</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E4%BD%A0%E5%9C%A8/">你在</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E6%8A%8A%E7%94%9F%E6%B4%BB%E5%86%99%E6%88%90%E8%AF%97/">把生活写成诗</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/java-jvm/" style="font-size: 10px;">java,jvm</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/%E4%BA%94%E8%A8%80%E7%BB%9D%E5%8F%A5/" style="font-size: 10px;">五言绝句</a> <a href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%8D/" style="font-size: 15px;">现代词</a> <a href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" style="font-size: 20px;">现代诗</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AF%AD%E5%BD%95/" style="font-size: 10px;">语录</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mysql/">Mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/">经典语录</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a><span class="category-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023年</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">13</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-jvm/" rel="tag">java,jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/" rel="tag">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%94%E8%A8%80%E7%BB%9D%E5%8F%A5/" rel="tag">五言绝句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%8D/" rel="tag">现代词</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E5%BD%95/" rel="tag">语录</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> 友情链接</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="https://www.liangrenchi.top/">三碗清风知识体系</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2023 梁任炽.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+    
+<script src="/localshare/js/social-share.js"></script>
+
+    
+<script src="/localshare/js/qrcode.js"></script>
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>

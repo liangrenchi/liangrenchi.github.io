@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>SpringBoot 实现接口参数加密解密功能 | 三碗清风</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="三碗清风" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/localshare/css/share.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">三碗清风</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我还在老地方等你，尽管你已走远</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+          <a class="main-nav-link" href="/about/"><i class="fa fa-user"></i> 关于</a>
+        
+          <a class="main-nav-link" href="/atom.xml"><i class="fa fa-rss"></i> 订阅</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-SpringBoot/SpringBoot-实现接口参数加密解密功能" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" target="_blank" href="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Flmg.jj20.com%2Fup%2Fallimg%2F1115%2F102221225252%2F211022225252-5-1200.jpg&refer=http%3A%2F%2Flmg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667280495&t=fcd545a01b9aa38fdfd5ccf158c21b47" rel="gallery_clidd51j00007fkvnc1f43qnw noopener">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Flmg.jj20.com%2Fup%2Fallimg%2F1115%2F102221225252%2F211022225252-5-1200.jpg&refer=http%3A%2F%2Flmg.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1667280495&t=fcd545a01b9aa38fdfd5ccf158c21b47" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      SpringBoot 实现接口参数加密解密功能
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-10-01T16:00:00.000Z" itemprop="datePublished">2022年10月02日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/SpringBoot/">SpringBoot</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2022/10/02/SpringBoot/SpringBoot-%E5%AE%9E%E7%8E%B0%E6%8E%A5%E5%8F%A3%E5%8F%82%E6%95%B0%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E5%8A%9F%E8%83%BD/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>加密解密本身并不是难事，问题是在何时去处理？定义一个过滤器，将请求和响应分别拦截下来进行处理也是一个办法，这种方式虽然粗暴，但是灵活，因为可以拿到一手的请求参数和响应数据。不过 SpringMVC 中给我们提供了 ResponseBodyAdvice 和 RequestBodyAdvice，利用这两个工具可以对请求和响应进行预处理，非常方便</p>
+<span id="more"></span>
+
+<p>所以今天这篇文章有两个目的：</p>
+<ul>
+<li>分享参数&#x2F;响应加解密的思路。</li>
+<li>分享 ResponseBodyAdvice 和 RequestBodyAdvice 的用法。</li>
+</ul>
+<p>好了，那么接下来就不废话了，我们一起来看下。</p>
+<h2 id="开发加解密-starter"><a href="#开发加解密-starter" class="headerlink" title="开发加解密 starter"></a>开发加解密 starter</h2><p>为了让我们开发的这个工具更加通用，也为了复习一下自定义 Spring Boot Starter，这里我们就将这个工具做成一个 stater，以后在 Spring Boot 项目中直接引用就可以。</p>
+<h3 id="1-1-创建项目"><a href="#1-1-创建项目" class="headerlink" title="1.1 创建项目"></a>1.1 创建项目</h3><p>首先我们创建一个 Spring Boot 项目，引入 spring-boot-starter-web 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.4.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>因为我们这个工具是为 Web 项目开发的，以后必然使用在 Web 环境中，所以这里添加依赖时 scope 设置为 provided。</p>
+<h3 id="1-2-加密工具类"><a href="#1-2-加密工具类" class="headerlink" title="1.2 加密工具类"></a>1.2 加密工具类</h3><p>依赖添加完成后，我们先来定义一个加密工具类备用，加密这块有多种方案可以选择，对称加密、非对称加密，其中对称加密又可以使用 AES、DES、3DES 等不同算法，这里我们使用 Java 自带的 Cipher 来实现对称加密，使用 AES 算法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AESUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">AES_ALGORITHM</span> <span class="operator">=</span> <span class="string">&quot;AES/ECB/PKCS5Padding&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取 cipher</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Cipher <span class="title function_">getCipher</span><span class="params">(<span class="type">byte</span>[] key, <span class="type">int</span> model)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">SecretKeySpec</span> <span class="variable">secretKeySpec</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(key, <span class="string">&quot;AES&quot;</span>);</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(AES_ALGORITHM);</span><br><span class="line">        cipher.init(model, secretKeySpec);</span><br><span class="line">        <span class="keyword">return</span> cipher;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// AES加密</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">encrypt</span><span class="params">(<span class="type">byte</span>[] data, <span class="type">byte</span>[] key)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> getCipher(key, Cipher.ENCRYPT_MODE);</span><br><span class="line">        <span class="keyword">return</span> Base64.getEncoder().encodeToString(cipher.doFinal(data));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// AES解密</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] decrypt(<span class="type">byte</span>[] data, <span class="type">byte</span>[] key) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> getCipher(key, Cipher.DECRYPT_MODE);</span><br><span class="line">        <span class="keyword">return</span> cipher.doFinal(Base64.getDecoder().decode(data));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个工具类比较简单，不需要多解释。需要说明的是，加密后的数据可能不具备可读性，因此我们一般需要对加密后的数据再使用 Base64 算法进行编码，获取可读字符串。换言之，上面的 AES 加密方法的返回值是一个 Base64 编码之后的字符串，AES 解密方法的参数也是一个 Base64 编码之后的字符串，先对该字符串进行解码，然后再解密。</p>
+<h3 id="1-3-响应工具类"><a href="#1-3-响应工具类" class="headerlink" title="1.3 响应工具类"></a>1.3 响应工具类</h3><p>接下来我们封装一个响应工具类备用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RespBean</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Integer status;</span><br><span class="line">    <span class="keyword">private</span> String msg;</span><br><span class="line">    <span class="keyword">private</span> Object obj;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> RespBean <span class="title function_">build</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RespBean</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> RespBean <span class="title function_">ok</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RespBean</span>(<span class="number">200</span>, msg, <span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> RespBean <span class="title function_">ok</span><span class="params">(String msg, Object obj)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RespBean</span>(<span class="number">200</span>, msg, obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> RespBean <span class="title function_">error</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RespBean</span>(<span class="number">500</span>, msg, <span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> RespBean <span class="title function_">error</span><span class="params">(String msg, Object obj)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RespBean</span>(<span class="number">500</span>, msg, obj);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">RespBean</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">RespBean</span><span class="params">(Integer status, String msg, Object obj)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.status = status;</span><br><span class="line">        <span class="built_in">this</span>.msg = msg;</span><br><span class="line">        <span class="built_in">this</span>.obj = obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getStatus</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> RespBean <span class="title function_">setStatus</span><span class="params">(Integer status)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.status = status;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getMsg</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> RespBean <span class="title function_">setMsg</span><span class="params">(String msg)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.msg = msg;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getObj</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> RespBean <span class="title function_">setObj</span><span class="params">(Object obj)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.obj = obj;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-定义注解"><a href="#1-4-定义注解" class="headerlink" title="1.4 定义注解"></a>1.4 定义注解</h3><p>接下来我们定义两个注解 <code>@Decrypt</code> 和 <code>@Encrypt</code>：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="variable">@Target</span>(&#123;ElementType.METHOD,ElementType.PARAMETER&#125;)</span><br><span class="line">public <span class="variable">@interface</span> Decrypt &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="variable">@Target</span>(ElementType.METHOD)</span><br><span class="line">public <span class="variable">@interface</span> Encrypt &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这两个注解就是两个标记，在以后使用的过程中，哪个接口方法添加了 @Encrypt 注解就对哪个接口的数据加密返回，哪个接口&#x2F;参数添加了 @Decrypt 注解就对哪个接口&#x2F;参数进行解密。这个定义也比较简单，没啥好说的，需要注意的是 <code>@Decrypt</code>比 <code>@Encrypt</code> 多了一个使用场景就是 <code>@Decrypt</code> 可以用在参数上。</p>
+<h3 id="1-5-定义一个-EncryptProperties-类来读取用户配置的-key"><a href="#1-5-定义一个-EncryptProperties-类来读取用户配置的-key" class="headerlink" title="1.5 定义一个 EncryptProperties 类来读取用户配置的 key"></a>1.5 定义一个 EncryptProperties 类来读取用户配置的 key</h3><p>考虑到用户可能会自己配置加密的 key，因此我们再来定义一个 EncryptProperties 类来读取用户配置的 key：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;spring.encrypt&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EncryptProperties</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">DEFAULT_KEY</span> <span class="operator">=</span> <span class="string">&quot;www.itboyhub.com&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> DEFAULT_KEY;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getKey</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> key;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setKey</span><span class="params">(String key)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.key = key;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我设置了默认的 key 是 <code>www.itboyhub.com</code>，key 是 16 位字符串，这个网站地址刚好满足。以后如果用户想自己配置 key，只需要在 application.properties 中配置 <code>spring.encrypt.key=xxx</code> 即可。</p>
+<p>所有准备工作做完了，接下来就该正式加解密了。</p>
+<p>因为这篇文章一个很重要的目的是想和大家分享 ResponseBodyAdvice 和 RequestBodyAdvice 的用法，RequestBodyAdvice 在做解密的时候倒是没啥问题，而 ResponseBodyAdvice 在做加密的时候则会有一些局限，不过影响不大，还是我前面说的，如果想非常灵活的掌控一切，那还是自定义过滤器吧。这里我就先用这两个工具来实现了。</p>
+<p>另外还有一点需要注意，ResponseBodyAdvice 在你使用了 @ResponseBody 注解的时候才会生效，RequestBodyAdvice 在你使用了 @RequestBody 注解的时候才会生效，换言之，前后端都是 JSON 交互的时候，这两个才有用。不过一般来说接口加解密的场景也都是前后端分离的时候才可能有的事。</p>
+<h3 id="1-6-接口加密"><a href="#1-6-接口加密" class="headerlink" title="1.6 接口加密"></a>1.6 接口加密</h3><p>先来看接口加密：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableConfigurationProperties(EncryptProperties.class)</span></span><br><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EncryptResponse</span> <span class="keyword">implements</span> <span class="title class_">ResponseBodyAdvice</span>&lt;RespBean&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">ObjectMapper</span> <span class="variable">om</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    EncryptProperties encryptProperties;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(MethodParameter returnType, Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; converterType)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> returnType.hasMethodAnnotation(Encrypt.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> RespBean <span class="title function_">beforeBodyWrite</span><span class="params">(RespBean body, MethodParameter returnType, MediaType selectedContentType, Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; selectedConverterType, ServerHttpRequest request, ServerHttpResponse response)</span> &#123;</span><br><span class="line">        <span class="type">byte</span>[] keyBytes = encryptProperties.getKey().getBytes();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (body.getMsg()!=<span class="literal">null</span>) &#123;</span><br><span class="line">                body.setMsg(AESUtils.encrypt(body.getMsg().getBytes(),keyBytes));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (body.getObj() != <span class="literal">null</span>) &#123;</span><br><span class="line">                body.setObj(AESUtils.encrypt(om.writeValueAsBytes(body.getObj()), keyBytes));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> body;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们自定义 EncryptResponse 类实现 ResponseBodyAdvice接口，泛型表示接口的返回类型，这里一共要实现两个方法：</p>
+<ol>
+<li>supports：这个方法用来判断什么样的接口需要加密，参数 returnType 表示返回类型，我们这里的判断逻辑就是方法是否含有 <code>@Encrypt</code> 注解，如果有，表示该接口需要加密处理，如果没有，表示该接口不需要加密处理。</li>
+<li>beforeBodyWrite：这个方法会在数据响应之前执行，也就是我们先对响应数据进行二次处理，处理完成后，才会转成 json 返回。我们这里的处理方式很简单，RespBean 中的 status 是状态码就不用加密了，另外两个字段重新加密后重新设置值即可。</li>
+<li>另外需要注意，自定义的 ResponseBodyAdvice 需要用 <code>@ControllerAdvice</code> 注解来标记。</li>
+</ol>
+<h3 id="1-7-接口解密"><a href="#1-7-接口解密" class="headerlink" title="1.7 接口解密"></a>1.7 接口解密</h3><p>再来看接口解密：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableConfigurationProperties(EncryptProperties.class)</span></span><br><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DecryptRequest</span> <span class="keyword">extends</span> <span class="title class_">RequestBodyAdviceAdapter</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    EncryptProperties encryptProperties;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">supports</span><span class="params">(MethodParameter methodParameter, Type targetType, Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; converterType)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> methodParameter.hasMethodAnnotation(Decrypt.class) || methodParameter.hasParameterAnnotation(Decrypt.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> HttpInputMessage <span class="title function_">beforeBodyRead</span><span class="params">(<span class="keyword">final</span> HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; converterType)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">byte</span>[] body = <span class="keyword">new</span> <span class="title class_">byte</span>[inputMessage.getBody().available()];</span><br><span class="line">        inputMessage.getBody().read(body);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">byte</span>[] decrypt = AESUtils.decrypt(body, encryptProperties.getKey().getBytes());</span><br><span class="line">            <span class="keyword">final</span> <span class="type">ByteArrayInputStream</span> <span class="variable">bais</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayInputStream</span>(decrypt);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HttpInputMessage</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> InputStream <span class="title function_">getBody</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                    <span class="keyword">return</span> bais;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> HttpHeaders <span class="title function_">getHeaders</span><span class="params">()</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> inputMessage.getHeaders();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.beforeBodyRead(inputMessage, parameter, targetType, converterType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>首先大家注意，DecryptRequest 类我们没有直接实现 <code>RequestBodyAdvice</code> 接口，而是继承自 RequestBodyAdviceAdapter 类，该类是 RequestBodyAdvice 接口的子类，并且实现了接口中的一些方法，这样当我们继承自 RequestBodyAdviceAdapter 时，就只需要根据自己实际需求实现某几个方法即可。</li>
+<li>supports：该方法用来判断哪些接口需要处理接口解密，我们这里的判断逻辑是方法上或者参数上含有 <code>@Decrypt</code> 注解的接口，处理解密问题。</li>
+<li>beforeBodyRead：这个方法会在参数转换成具体的对象之前执行，我们先从流中加载到数据，然后对数据进行解密，解密完成后再重新构造 HttpInputMessage 对象返回。</li>
+</ol>
+<h3 id="1-8-定义一个自动化配置类"><a href="#1-8-定义一个自动化配置类" class="headerlink" title="1.8 定义一个自动化配置类"></a>1.8 定义一个自动化配置类</h3><p>接下来，我们再来定义一个自动化配置类，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan(&quot;org.javaboy.encrypt.starter&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EncryptAutoConfiguration</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个也没啥好说的，比较简单。</p>
+<p>最后，resources 目录下定义 META-INF，然后再定义 spring.factories 文件，内容如下：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>=org.javaboy.encrypt.starter.autoconfig.EncryptAutoConfiguration</span><br></pre></td></tr></table></figure>
+
+<p>这样当项目启动时，就会自动加载该配置类。</p>
+<p>至此，我们的 starter 就开发完成啦。</p>
+<h2 id="2-打包发布"><a href="#2-打包发布" class="headerlink" title="2.打包发布"></a>2.打包发布</h2><p>我们可以将项目安装到本地仓库，也可以发布到线上供他人使用。</p>
+<p>发不到线上我们可以使用 JitPack 来做。</p>
+<p>首先我们在 GitHub 上创建一个仓库，将我们的代码上传上去，这个过程应该不用我多说吧。</p>
+<p>上传成功后，点击右边的 <code>Create a new release</code> 按钮，发布一个正式版，如下：</p>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20221002113337006.png" alt="image-20221002113337006"></p>
+<p>编辑</p>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20221002113402069.png" alt="image-20221002113402069"></p>
+<p>编辑</p>
+<p>发布成功后，打开 jitpack，输入仓库的完整路径，点击 lookup 按钮，查找到之后，再点击 <code>Get it</code> 按钮完成构建，如下：</p>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20221002113436638.png" alt="image-20221002113436638"></p>
+<p>编辑</p>
+<p>构建成功后，JitPack 上会给出项目引用方式：</p>
+<p>注意引用时将 tag 改成你具体的版本号。</p>
+<p>至此，我们的工具就已经成功发布了！小伙伴们可以通过如下方式引用这个 starter：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.lenve<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>encrypt-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>jitpack.io<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://jitpack.io<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-应用"><a href="#3-应用" class="headerlink" title="3.应用"></a>3.应用</h2><p>我们创建一个普通的 Spring Boot 项目，引入 web 依赖，再引入我们刚刚的 starter 依赖，如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.lenve<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>encrypt-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>jitpack.io<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://jitpack.io<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后再创建一个实体类备用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="comment">//省略 getter/setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>创建两个测试接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/user&quot;)</span></span><br><span class="line">    <span class="meta">@Encrypt</span></span><br><span class="line">    <span class="keyword">public</span> RespBean <span class="title function_">getUser</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>();</span><br><span class="line">        user.setId((<span class="type">long</span>) <span class="number">99</span>);</span><br><span class="line">        user.setUsername(<span class="string">&quot;javaboy&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> RespBean.ok(<span class="string">&quot;ok&quot;</span>, user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/user&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> RespBean <span class="title function_">addUser</span><span class="params">(<span class="meta">@RequestBody</span> <span class="meta">@Decrypt</span> User user)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;user = &quot;</span> + user);</span><br><span class="line">        <span class="keyword">return</span> RespBean.ok(<span class="string">&quot;ok&quot;</span>, user);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一个接口使用了 <code>@Encrypt</code> 注解，所以会对该接口的数据进行加密（如果不使用该注解就不加密），第二个接口使用了 <code>@Decrypt</code> 所以会对上传的参数进行解密，注意 <code>@Decrypt</code> 注解既可以放在方法上也可以放在参数上。</p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%8A%A0%E8%A7%A3%E5%AF%86-starter"><span class="toc-text">开发加解密 starter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-text">1.1 创建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%8A%A0%E5%AF%86%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-text">1.2 加密工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%93%8D%E5%BA%94%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-text">1.3 响应工具类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3"><span class="toc-text">1.4 定义注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA-EncryptProperties-%E7%B1%BB%E6%9D%A5%E8%AF%BB%E5%8F%96%E7%94%A8%E6%88%B7%E9%85%8D%E7%BD%AE%E7%9A%84-key"><span class="toc-text">1.5 定义一个 EncryptProperties 类来读取用户配置的 key</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E6%8E%A5%E5%8F%A3%E5%8A%A0%E5%AF%86"><span class="toc-text">1.6 接口加密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-%E6%8E%A5%E5%8F%A3%E8%A7%A3%E5%AF%86"><span class="toc-text">1.7 接口解密</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E8%87%AA%E5%8A%A8%E5%8C%96%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="toc-text">1.8 定义一个自动化配置类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83"><span class="toc-text">2.打包发布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BA%94%E7%94%A8"><span class="toc-text">3.应用</span></a></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="http://example.com/2022/10/02/SpringBoot/SpringBoot-实现接口参数加密解密功能/">http://example.com/2022/10/02/SpringBoot/SpringBoot-实现接口参数加密解密功能/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/" rel="tag">springboot</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+  
+    <a href="/2022/10/02/Mysql/2022102-Mysql%E5%85%AB%E8%82%A1%E6%96%87%E6%95%B4%E7%90%86%EF%BC%881%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          Mysql基础整理（1）
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/04/18/JVM/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/">垃圾收集器与内存分配策略</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/17/JVM/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/">Java内存区域与内存溢出异常</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E5%8A%A0%E7%8F%AD/">加班</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E4%BD%A0%E5%9C%A8/">你在</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E6%8A%8A%E7%94%9F%E6%B4%BB%E5%86%99%E6%88%90%E8%AF%97/">把生活写成诗</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/java-jvm/" style="font-size: 10px;">java,jvm</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/%E4%BA%94%E8%A8%80%E7%BB%9D%E5%8F%A5/" style="font-size: 10px;">五言绝句</a> <a href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%8D/" style="font-size: 15px;">现代词</a> <a href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" style="font-size: 20px;">现代诗</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AF%AD%E5%BD%95/" style="font-size: 10px;">语录</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mysql/">Mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/">经典语录</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a><span class="category-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023年</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">13</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-jvm/" rel="tag">java,jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/" rel="tag">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%94%E8%A8%80%E7%BB%9D%E5%8F%A5/" rel="tag">五言绝句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%8D/" rel="tag">现代词</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E5%BD%95/" rel="tag">语录</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> 友情链接</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="https://www.liangrenchi.top/">三碗清风知识体系</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2023 梁任炽.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+    
+<script src="/localshare/js/social-share.js"></script>
+
+    
+<script src="/localshare/js/qrcode.js"></script>
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>

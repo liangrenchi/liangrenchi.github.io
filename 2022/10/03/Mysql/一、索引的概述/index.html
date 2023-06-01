@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>索引的概述 | 三碗清风</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+  
+    <link rel="alternate" href="/atom.xml" title="三碗清风" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="/localshare/css/share.css">
+
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">三碗清风</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我还在老地方等你，尽管你已走远</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        
+          <a class="main-nav-link" href="/."><i class="fa fa-home"></i> 首页</a>
+        
+          <a class="main-nav-link" href="/archives/"><i class="fa fa-archive"></i> 归档</a>
+        
+          <a class="main-nav-link" href="/about/"><i class="fa fa-user"></i> 关于</a>
+        
+          <a class="main-nav-link" href="/atom.xml"><i class="fa fa-rss"></i> 订阅</a>
+        
+      </nav>
+    </div>
+    <div id="search-form">
+      <div id="result-mask" class="hide"></div>
+      <label><input id="search-key" type="text" autocomplete="off" placeholder="搜索"></label>
+      <div id="result-wrap" class="hide">
+        <div id="search-result"></div>
+      </div>
+      <div class="hide">
+        <template id="search-tpl">
+          <div class="item">
+            <a href="/{path}" title="{title}">
+              <div class="title">{title}</div>
+              <div class="time">{date}</div>
+              <div class="tags">{tags}</div>
+            </a>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Mysql/一、索引的概述" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      索引的概述
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-meta">
+      
+      <span class="article-date">
+  <i class="fa fa-date"></i>
+  <time class="dt-published" datetime="2022-10-02T16:00:00.000Z" itemprop="datePublished">2022年10月03日</time>
+</span>
+      
+  <div class="article-category">
+    <i class="fa fa-classify"></i>
+    <a class="article-category-link" href="/categories/Mysql/">Mysql</a>
+  </div>
+
+      
+        <span class="article-views">
+  <i class="fa fa-views"></i>
+  <i id="busuanzi_container_page_pv">
+      <i id="busuanzi_value_page_pv"></i>
+  </i>
+</span>
+
+      
+      
+<a href="/2022/10/03/Mysql/%E4%B8%80%E3%80%81%E7%B4%A2%E5%BC%95%E7%9A%84%E6%A6%82%E8%BF%B0/#comments" class="article-comment-link">
+  
+    
+    
+    
+    
+    
+  
+  <i class="fa fa-commt"></i>
+  留言
+</a>
+
+
+    </div>
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="一、索引的概述"><a href="#一、索引的概述" class="headerlink" title="一、索引的概述"></a>一、索引的概述</h2><h3 id="1、为什么要使用索引"><a href="#1、为什么要使用索引" class="headerlink" title="1、为什么要使用索引"></a>1、为什么要使用索引</h3><p>在海量数据中进行查询某条记录的场㬌是时常发生的，那么如何提升查询性能，就跟查询的字段是否有索引有关系。如果字段加了索引，那么查询性能就非常快。</p>
+<span id="more"></span>
+
+<ul>
+<li>索引为什么快？</li>
+<li>索引是什么？</li>
+<li>在使用索引时要注意什么事项？</li>
+</ul>
+<h3 id="2、索引是什么"><a href="#2、索引是什么" class="headerlink" title="2、索引是什么"></a>2、索引是什么</h3><p>查字典的方式？“数”–通过目录来查，能快速定位到有查找的位置。</p>
+<p>没有使用索引时就会进行全表扫描，进行了多次的IO读写，这样的性能较差。</p>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20230115014110419.png" alt="image-20230115014110419"></p>
+<p>为数据库某个字段创建索引，相当于是为了这个字段的内容创建了一个目录。通过这个目录可以快速实现数据的定位，也就是通过索引能够快速的找到某条数据在磁盘的位置。</p>
+<p><img src="https://menuimg.oss-cn-beijing.aliyuncs.com/image-20230115014953719.png" alt="image-20230115014953719"></p>
+<h3 id="3、索引存放的位置"><a href="#3、索引存放的位置" class="headerlink" title="3、索引存放的位置"></a>3、索引存放的位置</h3><p>对于max系统在&#x2F;user&#x2F;local&#x2F;mysql文件夹中，对于win系统是放在c:&#x2F;programdata&#x2F;mysql（隐藏文件夹）</p>
+<ul>
+<li>InnoDB存储引擎的表：将索引和数据存放在同一个文件夹李。</li>
+<li>MyISAM存储引擎的表：索引和数据分开两个文件夹存储。</li>
+</ul>
+<h3 id="4、索引的分类"><a href="#4、索引的分类" class="headerlink" title="4、索引的分类"></a>4、索引的分类</h3><ul>
+<li>主键索引：主键自带索引效果，通过主键查询数据性能非常好</li>
+<li>普通索引：为普通列创建索引</li>
+<li>唯一索引：列中的数据是唯一的，比普通索引的性能有好。</li>
+<li>联合索引（组合索引）：一次性为表中的多个字段一起创建索引，最左前缀法则（如何命中联合索引中的索引列）。注意：一个联合索引建议不要超过5个列。</li>
+<li>全文索引：MyISAM存储引擎支持全文索引，在实际生产环境中并不会使用MyISAM存储引擎的全文索引来实现全文查找。（<strong>为什么不使用？</strong>）比如去百度査询数据，来自于网页的标题或网页的内容。</li>
+</ul>
+<h2 id="二、索引的数据结构"><a href="#二、索引的数据结构" class="headerlink" title="二、索引的数据结构"></a>二、索引的数据结构</h2><p>使用索引查找数据性能很快，避免了全表扫描的多次磁盘IO读写，但是我们发现，使用索引实际上也需要在索引中查找数据，而且数据量是一样的，那么凭什么索引就能快呢？这就跟索引使用了哪种数据结构支持快速查找。</p>
+
+        
+            <div id="toc-article">
+                
+  <div class="widget-wrap" id="toc-wrap">
+    <h3 class="widget-title"><i class="fa fa-toc"></i> 文章目录</h3>
+    <div class="widget">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%B4%A2%E5%BC%95%E7%9A%84%E6%A6%82%E8%BF%B0"><span class="toc-text">一、索引的概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E7%B4%A2%E5%BC%95"><span class="toc-text">1、为什么要使用索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E7%B4%A2%E5%BC%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">2、索引是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E7%B4%A2%E5%BC%95%E5%AD%98%E6%94%BE%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-text">3、索引存放的位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">4、索引的分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%B4%A2%E5%BC%95%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">二、索引的数据结构</span></a></li></ol>
+    </div>
+  </div>
+
+
+            </div>
+        
+        
+          <blockquote id="copyright">
+              <p>原文链接: <a href="http://example.com/2022/10/03/Mysql/一、索引的概述/">http://example.com/2022/10/03/Mysql/一、索引的概述/</a></p>
+              <p>版权声明: 转载请注明出处.</p>
+          </blockquote>
+        
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div class="article-tag-wrap">
+          
+
+          
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/" rel="tag">mysql</a></li></ul>
+
+          
+    <div class="social-share">
+      <span>分享到:</span>
+    </div>
+
+
+
+        </div>
+      
+      
+        
+<nav id="article-nav">
+  
+    <a href="/2022/10/03/%E8%AF%97%E8%AF%8D/%E5%A5%B9%E4%B8%80%E7%82%B9%E5%A4%B4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">older</strong>
+      <div class="article-nav-title">
+        
+          她一点头
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/10/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E7%A8%80%E7%96%8F%E6%95%B0%E7%BB%84%E4%B8%8E%E9%98%9F%E5%88%97/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">newer</strong>
+      <div class="article-nav-title">
+        
+          数据结构与算法学习-稀疏数组与队列
+        
+      </div>
+    </a>
+  
+</nav>
+
+      
+      
+        
+
+
+
+
+
+
+
+
+      
+    </footer>
+  </div>
+</article>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-posts"></i> 最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/04/18/JVM/%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/">垃圾收集器与内存分配策略</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/17/JVM/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA%E5%BC%82%E5%B8%B8/">Java内存区域与内存溢出异常</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E5%8A%A0%E7%8F%AD/">加班</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E4%BD%A0%E5%9C%A8/">你在</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/%E8%AF%97%E8%AF%8D/%E6%8A%8A%E7%94%9F%E6%B4%BB%E5%86%99%E6%88%90%E8%AF%97/">把生活写成诗</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/java-jvm/" style="font-size: 10px;">java,jvm</a> <a href="/tags/jvm/" style="font-size: 10px;">jvm</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/springboot/" style="font-size: 10px;">springboot</a> <a href="/tags/%E4%BA%94%E8%A8%80%E7%BB%9D%E5%8F%A5/" style="font-size: 10px;">五言绝句</a> <a href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%8D/" style="font-size: 15px;">现代词</a> <a href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" style="font-size: 20px;">现代诗</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 10px;">算法</a> <a href="/tags/%E8%AF%AD%E5%BD%95/" style="font-size: 10px;">语录</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-classify"></i> 分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/JVM/">JVM</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mysql/">Mysql</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/SpringBoot/">SpringBoot</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BB%8F%E5%85%B8%E8%AF%AD%E5%BD%95/">经典语录</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AF%97%E8%AF%8D/">诗词</a><span class="category-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-archive"></i> 归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023年</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022年</a><span class="archive-list-count">13</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-tag"></i> 标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mysql/" rel="tag">Mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-jvm/" rel="tag">java,jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jvm/" rel="tag">jvm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/" rel="tag">mysql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/springboot/" rel="tag">springboot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BA%94%E8%A8%80%E7%BB%9D%E5%8F%A5/" rel="tag">五言绝句</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%8D/" rel="tag">现代词</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%B0%E4%BB%A3%E8%AF%97/" rel="tag">现代诗</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%AD%E5%BD%95/" rel="tag">语录</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title"><i class="fa fa-link"></i> 友情链接</h3>
+    <div class="widget">
+      <ul>
+      
+        <li>
+          <a target="_blank" rel="noopener" href="https://www.liangrenchi.top/">三碗清风知识体系</a>
+        </li>
+      
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <a id="totop" href="#top"></a>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <p>
+        <a href="/sitemap.xml">网站地图</a>
+        <span> | </span><a href="/atom.xml">订阅本站</a>
+        <span> | </span><a href="/about/">联系博主</a>
+      </p>
+      
+        <p>
+          <i class="fa fa-visitors"></i>
+          <i id="busuanzi_container_site_uv"><i id="busuanzi_value_site_uv"></i></i>
+          ，
+          <i class="fa fa-views"></i>
+          <i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>
+        </p>
+      
+      <p>
+        <span>Copyright &copy; 2023 梁任炽.</span>
+        <span>Theme by <a href="https://github.com/chaooo/hexo-theme-BlueLake/" target="_blank">BlueLake.</a></span>
+        <span>Powered by <a href="https://hexo.io/" target="_blank">Hexo.</a></span>
+      </p>
+    </div>
+  </div>
+</footer>
+
+    </div>
+  </div>
+  
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+<script src="/js/search.json.js"></script>
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+  
+<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+    
+<script src="/localshare/js/social-share.js"></script>
+
+    
+<script src="/localshare/js/qrcode.js"></script>
+
+  
+  
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+</body>
+</html>
